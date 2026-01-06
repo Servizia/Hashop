@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hashop | المتجر الشامل</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #000000;
+      --primary-hover: #333333;
+      --brand-teal: #0f6e6e;
+      --accent: #ff8c00; 
+      --bg-custom: #72bcc5; 
+      --text-dark: #1a1a1a;
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.95);
+      --radius-lg: 24px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Tajawal", sans-serif;
+      color: var(--text-dark);
+      background-color: var(--bg-custom);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+    }
+
+    .hidden { display: none !important; }
+
+    /* --- Navigation Principale Fixe --- */
+    header {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      padding: 15px 20px;
+      background: transparent;
+    }
+
+    .header-content {
+      width: 100%;
+      max-width: 1200px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative; 
+      height: 70px;
+    }
+
+    .logo-container {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 8px 15px 8px 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+    
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+    }
+    
+    .brand-name { font-weight: 900; font-size: 1.8rem; color: var(--brand-teal); text-transform: uppercase; }
+    .brand-translate { font-weight: 800; font-size: 1.5rem; color: var(--accent); border-right: 3px solid var(--accent); padding-right: 12px; }
+
+    .nav-btn {
+      background: var(--brand-teal);
+      color: white;
+      border: 2px solid var(--white);
+      padding: 8px 18px;
+      border-radius: 30px; 
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.3s;
+      white-space: nowrap;
+    }
+    .nav-btn:hover { background: #0b5555; transform: scale(1.05); }
+
+    .contact-trigger { 
+      background: var(--accent); 
+      box-shadow: var(--shadow);
+      position: absolute;
+      right: 0; 
+      z-index: 5;
+    }
+    .contact-trigger:hover { background: #e67e00; }
+
+    /* --- Layouts --- */
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    .hero { padding-top: 150px; padding-bottom: 40px; text-align: center; color: white; }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .hero p { font-size: 1.3rem; font-weight: 500; }
+
+    /* Grille de 3 produits */
+    .product-grid { 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 30px; 
+      margin-bottom: 40px; 
+      width: 100%;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      text-align: center; 
+    }
+    .product-card:hover { transform: translateY(-5px); }
+    .product-card img { width: 100%; height: 300px; object-fit: cover; cursor: pointer; }
+    .product-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+    .product-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 15px; cursor: pointer; min-height: 2.8em; display: flex; align-items: center; }
+    .price-tag { font-size: 1.6rem; font-weight: 900; color: var(--accent); margin-bottom: 20px; }
+
+    .buy-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 15px;
+      font-weight: 800;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .buy-btn:hover { background: var(--primary-hover); transform: scale(1.03); }
+
+    /* --- Titre de Page Fixe (Sticky) --- */
+    .sticky-title-container {
+      position: sticky;
+      top: 100px;
+      background: white;
+      z-index: 90;
+      width: 100%;
+      text-align: center;
+      padding: 20px 0;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .sticky-title-container h2 {
+      margin: 0;
+      border-bottom: 4px solid var(--accent);
+      display: inline-block;
+      padding-bottom: 5px;
+      font-size: 2.2rem;
+      color: var(--text-dark);
+    }
+
+    /* Catégories (Accueil) */
+    .category-grid { 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 25px; 
+      margin-bottom: 50px; 
+    }
+    .category-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: 0.3s;
+      border: 3px solid transparent;
+    }
+    .category-card:hover { transform: translateY(-8px); border-color: var(--accent); }
+    .category-icon { font-size: 4rem; margin-bottom: 20px; display: block; }
+    .category-name { font-size: 1.8rem; font-weight: 900; color: #1a1a1a; }
+
+    /* Vues de contenu */
+    .content-view {
+      margin-top: 130px;
+      background: white;
+      border-radius: 40px 40px 0 0;
+      padding: 50px 25px;
+      min-height: 100vh;
+      box-shadow: 0 -15px 40px rgba(0,0,0,0.1);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+    }
+
+    .back-btn {
+      background: #fff7ed;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-weight: 900;
+      padding: 12px 25px;
+      border-radius: 50px;
+      margin-bottom: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .back-btn:hover { background: var(--accent); color: white; }
+
+    /* Panier */
+    #cartDrawer {
+      position: fixed; left: -100%; top: 0; width: 100%; max-width: 450px;
+      height: 100%; background: white; z-index: 2000; transition: 0.4s;
+      padding: 30px; display: flex; flex-direction: column;
+    }
+    #cartDrawer.open { left: 0; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1500; display: none; backdrop-filter: blur(5px); }
+
+    footer { width: 100%; text-align: center; padding: 50px; color: white; font-weight: 700; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .contact-trigger { display: none; }
+      .sticky-title-container { top: 90px; }
+    }
+    @media (max-width: 600px) {
+      .product-grid, .category-grid { grid-template-columns: 1fr; }
+      .header-content { height: auto; padding-top: 10px; }
+      .logo-container { transform: scale(0.9); }
+      .sticky-title-container { top: 85px; padding: 10px 0; }
+      .sticky-title-container h2 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <div class="logo-container">
+        <button class="nav-btn" onclick="toggleCart()">السلة (<span id="count">0</span>)</button>
+        <div class="brand-group" onclick="showHome()">
+          <span class="brand-name">Hashop</span>
+          <span class="brand-translate">هاشوب</span>
+        </div>
+      </div>
+      <button class="nav-btn contact-trigger" onclick="showContact()">اتصل بنا / Contact</button>
+    </div>
+  </header>
+
+  <main id="home-view" class="container">
+    <section class="hero">
+      <h1>مرحباً بك في متجر هاشوب</h1>
+      <p>أفضل المنتجات المختارة بعناية لأجلك</p>
+    </section>
+    
+    <div class="category-grid">
+      <div class="category-card" onclick="showCategory('electronics')">
+        <span class="category-icon">📱</span>
+        <div class="category-name">إلكترونيات</div>
+        <p style="color:#555;">أحدث التقنيات والجوالات</p>
+      </div>
+      <div class="category-card" onclick="showCategory('fashion')">
+        <span class="category-icon">👕</span>
+        <div class="category-name">أزياء</div>
+        <p style="color:#555;">موضة عصرية لجميع الأذواق</p>
+      </div>
+      <div class="category-card" onclick="showCategory('home')">
+        <span class="category-icon">🏠</span>
+        <div class="category-name">منزل وديكور</div>
+        <p style="color:#555;">أناقة وراحة لمنزلك</p>
+      </div>
+    </div>
+  </main>
+
+  <main id="category-view" class="hidden">
+    <div class="container">
+      <div class="content-view">
+        <button class="back-btn" onclick="showHome()">← العودة للأقسام الرئيسيّة</button>
+        <div class="sticky-title-container">
+          <h2 id="category-title"></h2>
+        </div>
+        <div id="product-list" class="product-grid"></div>
+      </div>
+    </div>
+  </main>
+
+  <main id="contact-view" class="hidden">
+    <div class="container">
+      <div class="content-view">
+        <button class="back-btn" onclick="showHome()">← العودة / Retour</button>
+        <div class="sticky-title-container">
+          <h2>اتصل بنا | Contactez-nous</h2>
+        </div>
+        <div style="width:100%; max-width: 800px; margin-top: 30px; text-align: center; font-size: 1.2rem;">
+             <p>📍 الدار البيضاء، المغرب</p>
+             <p>📞 +212 6 00 00 00 00</p>
+             <p>📧 support@hashop.com</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <main id="detail-view" class="hidden">
+    <div class="container">
+      <div class="content-view">
+        <button id="detail-back-btn" class="back-btn">← العودة لقائمة المنتجات</button>
+        <div id="detail-content" style="display: flex; flex-direction: column; align-items: center; width: 100%;"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+  <div id="cartDrawer">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+      <h2 style="margin:0;">سلة التسوق</h2>
+      <button onclick="toggleCart()" style="font-size:2.5rem; border:none; background:none; cursor:pointer;">×</button>
+    </div>
+    <div id="cart-items" style="flex-grow:1; overflow-y:auto;"></div>
+    <div style="border-top:2px solid #eee; padding-top:30px;">
+      <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.6rem; margin-bottom:25px;">
+        <span>الإجمالي:</span>
+        <span id="total-price" style="color: var(--accent);">0 ر.س</span>
+      </div>
+      <button class="buy-btn" style="padding:20px;" onclick="checkout()">تأكيد الطلب الآن</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Hashop 2026 &copy; جميع الحقوق محفوظة لمتجر هاشوب</p>
+  </footer>
+
+  <script>
+    const generateProducts = (cat, name, priceBase) => {
+      return Array.from({ length: 12 }, (_, i) => ({
+        id: `${cat}-${i+1}`,
+        category: cat,
+        title: `${name} عالي الجودة #${i+1}`,
+        price: priceBase + (Math.floor(Math.random() * 100)),
+        img: `https://picsum.photos/seed/${cat}${i+1}/800/800`,
+        desc: `استمتع بأفضل تجربة مع ${name} المطور لعام 2026، كفاءة عالية وتصميم عصري يناسب احتياجاتك.`
+      }));
+    };
+
+    const allProducts = {
+      electronics: generateProducts('electronics', 'جهاز إلكتروني', 400),
+      fashion: generateProducts('fashion', 'تصميم أزياء', 200),
+      home: generateProducts('home', 'أثاث منزلي', 300)
+    };
+
+    let cart = [];
+
+    function hideAll() {
+      document.querySelectorAll('main').forEach(m => m.classList.add('hidden'));
+    }
+
+    function showHome() {
+      hideAll();
+      document.getElementById('home-view').classList.remove('hidden');
+      window.scrollTo(0,0);
+    }
+
+    function showContact() {
+      hideAll();
+      document.getElementById('contact-view').classList.remove('hidden');
+      window.scrollTo(0,0);
+    }
+
+    function showCategory(catId) {
+      const titles = { electronics: 'عالم الإلكترونيات', fashion: 'أحدث خطوط الموضة', home: 'مستلزمات المنزل العصري' };
+      document.getElementById('category-title').innerText = titles[catId];
+      const list = document.getElementById('product-list');
+      
+      list.innerHTML = allProducts[catId].map(p => `
+        <div class="product-card">
+          <img src="${p.img}" onclick="viewProduct('${p.category}', '${p.id}')" alt="${p.title}">
+          <div class="product-info">
+            <div class="product-title" onclick="viewProduct('${p.category}', '${p.id}')">${p.title}</div>
+            <div class="price-tag">${p.price} ر.س</div>
+            <button class="buy-btn" onclick="addToCart('${p.category}', '${p.id}')">أضف للسلة</button>
+          </div>
+        </div>
+      `).join('');
+      
+      hideAll();
+      document.getElementById('category-view').classList.remove('hidden');
+      window.scrollTo(0,0);
+    }
+
+    function viewProduct(catId, prodId) {
+      const p = allProducts[catId].find(prod => prod.id === prodId);
+      const content = document.getElementById('detail-content');
+      content.innerHTML = `
+        <img src="${p.img}" style="width:100%; max-width: 500px; border-radius:30px; margin-bottom:30px; box-shadow:var(--shadow);">
+        <h1>${p.title}</h1>
+        <div class="price-tag" style="font-size:2.5rem;">${p.price} ر.س</div>
+        <p style="text-align:center; max-width:600px; color:#555; font-size:1.1rem;">${p.desc}</p>
+        <button class="buy-btn" style="max-width:300px; margin-top:20px; padding:18px;" onclick="addToCart('${catId}', '${prodId}')">أضف إلى السلة الآن</button>
+      `;
+      document.getElementById('detail-back-btn').onclick = () => showCategory(catId);
+      hideAll();
+      document.getElementById('detail-view').classList.remove('hidden');
+      window.scrollTo(0,0);
+    }
+
+    function toggleCart() {
+      const drawer = document.getElementById('cartDrawer');
+      const overlay = document.getElementById('overlay');
+      const isOpen = drawer.classList.contains('open');
+      drawer.classList.toggle('open');
+      overlay.style.display = isOpen ? 'none' : 'block';
+    }
+
+    function addToCart(catId, prodId) {
+      const p = allProducts[catId].find(prod => prod.id === prodId);
+      cart.push(p);
+      updateCartUI();
+      if(!document.getElementById('cartDrawer').classList.contains('open')) toggleCart();
+    }
+
+    function updateCartUI() {
+      document.getElementById('count').innerText = cart.length;
+      const itemsDiv = document.getElementById('cart-items');
+      const totalDiv = document.getElementById('total-price');
+      if(cart.length === 0) {
+        itemsDiv.innerHTML = '<p style="text-align:center; padding:20px;">السلة فارغة</p>';
+        totalDiv.innerText = "0 ر.س";
+        return;
+      }
+      let total = 0;
+      itemsDiv.innerHTML = cart.map((item, index) => {
+        total += item.price;
+        return `
+          <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; padding:10px; background:#f9f9f9; border-radius:10px;">
+            <img src="${item.img}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+            <div style="flex-grow:1; font-size:0.9rem; font-weight:bold;">${item.title}</div>
+            <div style="color:var(--accent); font-weight:800;">${item.price}</div>
+            <button onclick="removeFromCart(${index})" style="border:none; color:red; cursor:pointer; font-weight:bold;">×</button>
+          </div>
+        `;
+      }).join('');
+      totalDiv.innerText = total + " ر.س";
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function checkout() {
+      if(cart.length === 0) return;
+      alert("تم تسجيل طلبك بنجاح! شكراً لثقتكم في هاشوب.");
+      cart = [];
+      updateCartUI();
+      toggleCart();
+    }
+
+    window.onload = showHome;
+  </script>
+</body>
+</html>
